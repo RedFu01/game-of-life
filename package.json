@@ -8,7 +8,8 @@
     "testEnvironment": "node"
   },
   "scripts": {
-    "test": "jest ./test"
+    "test": "jest ./test",
+    "start": "babel-node src/index.js"
   },
   "author": "",
   "license": "ISC",
