@@ -62,6 +62,13 @@ test('Test cell survives if 3 neighbours', () => {
 
 
 test('Test game with maxIteration', () => {
-    const gameSummary = gameOfLife('./data/infinite-in-5x5.json');
+    const gameSummary = gameOfLife('./data/infinite-in-5x5.json', { maxIteration: 2 });
     expect(gameSummary.iterationCount).toBe(2);
+    expect(gameSummary.result).toBe([
+        [0,0,0,0,0],
+        [0,0,1,0,0],
+        [0,0,1,0,0],
+        [0,0,1,0,0],
+        [0,0,0,0,0]
+    ])
 });
