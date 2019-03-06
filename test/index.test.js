@@ -2,15 +2,13 @@ import gameOfLife from '../src/gameOfLife.js';
 import Game from '../src/Game';
 
 test('Test that the saved game file is properly read', () => {
-    let output = '';
-    console.log = input => output += input;
-    gameOfLife('./data/empty4x4.json');
+    const summary = gameOfLife('./data/empty4x4.json');
 
-    expect(output).toBe([
-        '0000',
-        '0000',
-        '0000',
-        '0000'
+    expect(summary.result).toBe([
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0]
     ].join('\n'));
 });
 
@@ -60,15 +58,26 @@ test('Test cell survives if 3 neighbours', () => {
     expect(cellState).toBe(1);
 });
 
-
-test('Test game with maxIteration', () => {
-    const gameSummary = gameOfLife('./data/infinite-in-5x5.json', { maxIteration: 2 });
+test('Game is over when board is same for last 2 turns', () => {
+    const gameSummary = gameOfLife('./data/infinite-in-5x5.json');
     expect(gameSummary.iterationCount).toBe(2);
-    expect(gameSummary.result).toBe([
+    expect(gameSummary.result).toEqual([
         [0,0,0,0,0],
         [0,0,1,0,0],
         [0,0,1,0,0],
         [0,0,1,0,0],
+        [0,0,0,0,0]
+    ])
+});
+
+test('Game is over when board is same for last 2 turns with a wrapping board', () => {
+    const gameSummary = gameOfLife('./data/infinite-in-5x5-right-aligned.json');
+    expect(gameSummary.iterationCount).toBe(2);
+    expect(gameSummary.result).toEqual([
+        [0,0,0,0,0],
+        [0,0,0,0,1],
+        [0,0,0,0,1],
+        [0,0,0,0,1],
         [0,0,0,0,0]
     ])
 });

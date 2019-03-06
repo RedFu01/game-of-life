@@ -1,6 +1,8 @@
 export default class Game {
-    constructor(gameState) {
+    constructor(gameState, historySize) {
         this.gameState = gameState;
+        this.historySize = historySize;
+        this.history = [];
     }
 
     start() {
@@ -9,9 +11,13 @@ export default class Game {
 
         let iterationCount = 0;
         while (true) {
-            if (sum(flatten(this.gameState)) === 0) {
+            const flatenned = flatten(this.gameState);
+            const gameHash = flatenned.join('');
+            if (sum(flatenned) === 0 || this.history.includes(gameHash)) {
                 break;
             }
+            this.history.push(gameHash);
+            this.history = this.history.slice(-this.historySize);
 
             this.gameState = this.createNextState();
 
@@ -19,7 +25,8 @@ export default class Game {
         }
 
         return {
-            iterationCount
+            iterationCount,
+            result: this.gameState,
         };
     }
 

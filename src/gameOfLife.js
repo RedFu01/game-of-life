@@ -6,10 +6,15 @@ function readFile(filePath) {
     return JSON.parse(raw);
 } 
 
-export default function gameOfLife(filePath) {
+const defaultConfig = {
+	loopMemory: Infinity,
+}
+
+export default function gameOfLife(filePath, config = defaultConfig) {
     const data = readFile(filePath);
 
-    const game = new Game(data);
+    const game = new Game(data, config.loopMemory);
+    
     const summary = game.start();
 
     const cliOutput = data.map(row => row.join('')).join('\n');
