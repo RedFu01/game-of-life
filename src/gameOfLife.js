@@ -10,15 +10,9 @@ const defaultConfig = {
 	loopMemory: Infinity,
 }
 
-export default function gameOfLife(filePath, config = defaultConfig) {
+export default async function gameOfLife(filePath, config = defaultConfig) {
     const data = readFile(filePath);
-
     const game = new Game(data, config.loopMemory);
-    
-    const summary = game.start();
-
-    const cliOutput = data.map(row => row.join('')).join('\n');
-    console.log(cliOutput);
-
+    const summary = await game.start();
     return summary;
 };
